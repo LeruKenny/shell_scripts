@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
 sudo apt-get update
 sudo apt-get install -y wget apt-transport-https software-properties-common
