@@ -21,4 +21,4 @@ foreach ($certTemplate in $certTemplates) {
     
 }
 Write-Output $result 
-$result | Export-Csv -Path "C:\Users\oajayi.tlx\Desktop\expired_certificate.csv" -Append -NoTypeInformation
+$result | Export-Csv -Path "C:\Users\\Desktop\expired_certificate.csv" -Append -NoTypeInformation
