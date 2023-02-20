@@ -1,9 +1,16 @@
-$cert = Get-ChildItem -Path Cert:\LocalMachine\My | Where-Object {$_.Subject -like "*Microsoft*"}
-
-foreach ($c in $cert) {
-    $expirationDate = $c.NotAfter
-    $timeLeft = New-TimeSpan -Start (Get-Date) -End $expirationDate
-    if ($timeLeft.TotalDays -lt 30) {
-        Send-MailMessage -From "example@email.com" -To "example@email.com" -Subject "Microsoft certificate expiration warning" -Body "The Microsoft certificate with subject $($c.Subject) is expiring on $expirationDate. Please renew it as soon as possible." -SmtpServer "smtp.example.com"
-    }
-}
+$result=@() 
+ 
+$ErrorActionPreference="SilentlyContinue"
+ 
+$a=Invoke-Command {Get-ChildItem Cert:\LocalMachine\ -Recurse |
+Where-Object {$_ -is [System.Security.Cryptography.X509Certificates.X509Certificate2] -and $_.NotAfter -gt (Get-Date) -and $_.NotAfter -lt (Get-Date).AddDays(30)} }
+ 
+foreach ($c in $a) {
+$result+=New-Object -TypeName PSObject -Property ([ordered]@{
+'Server'=$i;
+'Certificate'=$c.Issuer;
+'Expires'=$c.NotAfter 
+})
+ 
+} 
+Write-Output $result
