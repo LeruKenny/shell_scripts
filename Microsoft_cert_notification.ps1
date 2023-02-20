@@ -1,3 +1,4 @@
+$OutputPath = "C:\Users\\Desktop\certs_to_expire.csv"
 $result=@()  
 # $ErrorActionPreference="SilentlyContinue"
  
@@ -11,4 +12,4 @@ $result+=New-Object -TypeName PSObject -Property ([ordered]@{
  
 } 
 Write-Output $result
-$result | Export-Csv -Path "C:\Users\\Desktop\certs_to_expire.csv" -Append -NoTypeInformation
+$result | Export-Csv -Path $OutputPath -Append -NoTypeInformation
