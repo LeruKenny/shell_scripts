@@ -1,4 +1,4 @@
-$caName = "fedramp-preprod-ca"
+$caName = ""
 
 
 $certTemplates = Get-CATemplate -CertificationAuthority $caName
